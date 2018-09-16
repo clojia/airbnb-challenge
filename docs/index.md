@@ -651,7 +651,7 @@ train_inputs, test_inputs, train_output, test_output= train_test_split(X, y, tes
 Here I chose XGBoost as baseline model as it achieved better performance than neural nets in my experiments. And grid search is used for tuning parameters. First of all, checking the class balance:
 
 
-```python
+```
 class_1 = len(stack_df.loc[df_select['dim_is_requested'] == 1])
 class_0 = len(df_select.loc[df_select['dim_is_requested'] == 0])
 class_1 / class_0
@@ -754,7 +754,7 @@ modelfit(xgb1, train_inputs, train_output, test_inputs, test_output)
 Tuning tree related parameters, and it might take a while (~20min):
 
 
-```python
+```
 param_test1 = {
  'max_depth': [4,7,10],
  'min_child_weight': [1,4,7]
@@ -767,7 +767,7 @@ gsearch1.fit(train_inputs, train_output)
 gsearch1.grid_scores_, gsearch1.best_params_, gsearch1.best_score_
 ```
 
-###### For saving your time, the output looks like:
+###### The output looks like:
 ```
 ([mean: 0.87861, std: 0.00157, params: {'max_depth': 4, 'min_child_weight': 1},
  mean: 0.87862, std: 0.00156, params: {'max_depth': 4, 'min_child_weight': 4}, 
@@ -786,7 +786,7 @@ mean: 0.91413, std: 0.00114, params: {'max_depth': 10, 'min_child_weight': 7}],
 Tuning split restrictions w/ updated `max_depth` and `min_child_weight`:
 
 
-```python
+```
 param_test2 = {
  'gamma':[i/10.0 for i in range(0,10,2)]
 }
@@ -799,8 +799,8 @@ gsearch3.grid_scores_, gsearch3.best_params_, gsearch3.best_score_
 ```
 
 
-```python
-###### For saving your time, the output looks like:
+
+###### The output looks like:
 ```
 [mean: 0.91802, std: 0.00075, params: {'gamma': 0.0}, 
 mean: 0.91783, std: 0.00060, params: {'gamma': 0.2}, 
@@ -808,7 +808,6 @@ mean: 0.91827, std: 0.00081, params: {'gamma': 0.4},
 mean: 0.91805, std: 0.00089, params: {'gamma': 0.6}, 
 mean: 0.91786, std: 0.00086, params: {'gamma': 0.8}] 
 {'gamma': 0.4} 0.9182724612977561
-```
 ```
 
 #### Tune subsample and colsample_bytree
@@ -829,8 +828,7 @@ gsearch4.grid_scores_, gsearch4.best_params_, gsearch4.best_score_
 ```
 
 
-```python
-###### For saving your time, the output looks like:
+###### The output looks like:
 ```
 [mean: 0.91585, std: 0.00114, params: {'colsample_bytree': 0.6, 'subsample': 0.6}, 
 mean: 0.91825, std: 0.00058, params: {'colsample_bytree': 0.6, 'subsample': 0.8}, 
@@ -843,13 +841,13 @@ mean: 0.91703, std: 0.00062, params: {'colsample_bytree': 1.0, 'subsample': 0.8}
 mean: 0.91725, std: 0.00088, params: {'colsample_bytree': 1.0, 'subsample': 1.0}] 
 {'colsample_bytree': 0.6, 'subsample': 1.0} 0.9199152032945523
 ```
-```
+
 
 #### Tune Regularization Parameters
 Tuning lambda to prevent overfitting:
 
 
-```python
+```
 param_test4 = {
  'reg_lambda':[1e-5, 1e-2, 0.1, 1, 100]
 }
@@ -862,8 +860,7 @@ gsearch6.grid_scores_, gsearch6.best_params_, gsearch6.best_score_
 ```
 
 
-```python
-###### For saving your time, the output looks like:
+###### The output looks like:
 ```
 [mean: 0.91595, std: 0.00120, params: {'reg_lambda': 1e-05}, 
  mean: 0.91595, std: 0.00095, params: {'reg_lambda': 0.01}, 
@@ -872,12 +869,11 @@ gsearch6.grid_scores_, gsearch6.best_params_, gsearch6.best_score_
  mean: 0.89979, std: 0.00111, params: {'reg_lambda': 100}] 
 {'reg_lambda': 1e-05} 0.9159459589963668
 ```
-```
 
 #### Tuning Learning Rate
 
 
-```python
+```
 xgb2 = XGBClassifier(
  learning_rate =0.1,
  n_estimators=5000,
